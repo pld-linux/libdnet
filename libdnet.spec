@@ -1,16 +1,16 @@
 Summary:	Interface to several low-level networking routines
 Summary(pl):	Interfejs do niektórych niskopoziomowych funkcji sieciowych
 Name:		libdnet
-Version:	1.7
+Version:	1.8
 Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/libdnet/%{name}-%{version}.tar.gz
-# Source0-md5:	e0680e7375dd733f50466fcd4ac5e203
-Patch0:		%{name}-am.patch
-Patch1:		%{name}-lt.patch
+# Source0-md5:	187054990cd8e4e1aa6845912b34236d
+Patch0:		%{name}-ac.patch
+Patch1:		%{name}-am.patch
 URL:		http://libdnet.sourceforge.net/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	libtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -34,21 +34,21 @@ niskopoziomowych funkcji sieciowych, w³±czaj±c w to:
 
 %package devel
 Summary:	Header files for libdnet
-Summary(pl):	Pliki nag³ówkowe libdnet
+Summary(pl):	Pliki nag³ówkowe biblioteki libdnet
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Header files for libdnet.
 
 %description devel -l pl
-Pliki nag³ówkowe libdnet.
+Pliki nag³ówkowe biblioteki libdnet.
 
 %package static
 Summary:	libdnet static library
 Summary(pl):	Statyczna biblioteka libdnet
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 libdnet static library.
@@ -60,7 +60,7 @@ Statyczna biblioteka libdnet.
 Summary:	Sample applications to use with libdnet
 Summary(pl):	Przyk³adowe aplikacje do wykorzystania libdnet
 Group:		Applications/Networking
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description progs
 Sample applications to use with libdnet.
@@ -74,9 +74,8 @@ Przyk³adowe aplikacje do wykorzystania libdnet.
 %patch1 -p1
 
 %build
-rm -f missing
 %{__libtoolize}
-%{__aclocal}
+%{__aclocal} -I config
 %{__autoconf}
 %{__autoheader}
 %{__automake}
@@ -85,9 +84,9 @@ rm -f missing
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -98,20 +97,20 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc THANKS TODO
-%attr(755,root,root) %{_libdir}/*.so.*.*
+%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*-config
-%attr(755,root,root) %{_libdir}/*.so
-%attr(755,root,root) %{_libdir}/*.la
+%attr(755,root,root) %{_libdir}/lib*.so
+%{_libdir}/lib*.la
 %{_includedir}/dnet
 %{_includedir}/*.h
 %{_mandir}/man3/*
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/*.a
+%{_libdir}/lib*.a
 
 %files progs
 %defattr(644,root,root,755)
