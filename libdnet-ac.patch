@@ -1,0 +1,15 @@
+--- libdnet-1.8/configure.in.orig	2004-05-05 22:34:55.000000000 +0200
++++ libdnet-1.8/configure.in	2004-06-06 00:11:01.969231152 +0200
+@@ -289,12 +289,6 @@
+ 	AC_LIBOBJ([route-none])
+ fi
+ 
+-dnl Generate LTLIBOBJS for libtool.
+-Xsed="sed -e s/^X//"
+-LTLIBOBJS=`echo X"$LIBOBJS"|\
+-	[$Xsed -e "s,\.[^.]* ,.lo ,g;s,\.[^.]*$,.lo,"]`
+-AC_SUBST(LTLIBOBJS)
+-
+ AC_OUTPUT([Makefile dnet-config include/Makefile include/dnet/Makefile
+ 	man/Makefile src/Makefile python/Makefile python/setup.py
+ 	test/Makefile test/check/Makefile test/dnet/Makefile],
