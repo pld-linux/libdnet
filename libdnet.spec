@@ -6,6 +6,7 @@ Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/libdnet/%{name}-%{version}.tar.gz
+# Source0-md5:	e0680e7375dd733f50466fcd4ac5e203
 Patch0:		%{name}-am.patch
 Patch1:		%{name}-lt.patch
 URL:		http://libdnet.sourceforge.net/
