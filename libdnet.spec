@@ -1,5 +1,5 @@
-Summary:	interface to several low-level networking routines
-Summary(pl):	interfejs do niektórych niskopoziomowych funkcji sieciowych
+Summary:	Interface to several low-level networking routines
+Summary(pl):	Interfejs do niektórych niskopoziomowych funkcji sieciowych
 Name:		libdnet
 Version:	1.7
 Release:	1
@@ -33,8 +33,8 @@ niskopoziomowych funkcji sieciowych, w³±czaj±c w to:
 * wysy³anie ,,surowych'' pakietów IP i ramek Ethernetowych
 
 %package devel
-Summary:	header files for libdnet
-Summary(pl):	pliki nag³ówkowe libdnet
+Summary:	Header files for libdnet
+Summary(pl):	Pliki nag³ówkowe libdnet
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
 
@@ -46,7 +46,7 @@ Pliki nag³ówkowe libdnet.
 
 %package static
 Summary:	libdnet static library
-Summary(pl):	statyczna biblioteka libdnet
+Summary(pl):	Statyczna biblioteka libdnet
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}
 
@@ -57,8 +57,8 @@ libdnet static library.
 Statyczna biblioteka libdnet.
 
 %package progs
-Summary:	sample applications to use with libdnet
-Summary(pl):	przyk³adowe aplikacje do wykorzystania libdnet
+Summary:	Sample applications to use with libdnet
+Summary(pl):	Przyk³adowe aplikacje do wykorzystania libdnet
 Group:		Applications/Networking
 Requires:	%{name} = %{version}
 
