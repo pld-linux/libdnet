@@ -5,10 +5,13 @@ Version:	1.7
 Release:	1
 License:	BSD
 Group:		Libraries
-Source0:	http://prdownloads.sourceforge.net/libdnet/%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/libdnet/%{name}-%{version}.tar.gz
 Patch0:		%{name}-am.patch
 Patch1:		%{name}-lt.patch
 URL:		http://libdnet.sourceforge.net/
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
