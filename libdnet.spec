@@ -22,7 +22,7 @@ networking routines, including:
 * kernel arp cache and route table lookup and manipulation
 * network firewalling (IP filter, ipfw, ipchains, pf, ...)
 * network interface lookup and manipulation
-* raw IP packet and Ethernet frame transmission 
+* raw IP packet and Ethernet frame transmission
 
 %description -l pl
 libdnet zapewnia uproszczony, przeno¶ny interfejs do niektórych
