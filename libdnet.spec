@@ -1,4 +1,6 @@
+# Conditional build:
 %bcond_without	static_libs	# don't build static library
+#
 Summary:	Interface to several low-level networking routines
 Summary(pl):	Interfejs do niektórych niskopoziomowych funkcji sieciowych
 Name:		libdnet
