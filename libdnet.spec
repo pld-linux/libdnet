@@ -2,7 +2,7 @@
 %bcond_without	static_libs	# don't build static library
 #
 Summary:	Interface to several low-level networking routines
-Summary(pl):	Interfejs do niektórych niskopoziomowych funkcji sieciowych
+Summary(pl.UTF-8):   Interfejs do niektÃ³rych niskopoziomowych funkcji sieciowych
 Name:		libdnet
 Version:	1.8
 Release:	1
@@ -27,49 +27,49 @@ networking routines, including:
 * network interface lookup and manipulation
 * raw IP packet and Ethernet frame transmission
 
-%description -l pl
-libdnet zapewnia uproszczony, przeno¶ny interfejs do niektórych
-niskopoziomowych funkcji sieciowych, w³±czaj±c w to:
-* manipulacjê adresami sieciowymi
-* przegl±danie i modyfikacjê pamiêci podrêcznej ARP oraz tablic routingu
+%description -l pl.UTF-8
+libdnet zapewnia uproszczony, przenoÅ›ny interfejs do niektÃ³rych
+niskopoziomowych funkcji sieciowych, wÅ‚Ä…czajÄ…c w to:
+* manipulacjÄ™ adresami sieciowymi
+* przeglÄ…danie i modyfikacjÄ™ pamiÄ™ci podrÄ™cznej ARP oraz tablic routingu
 * firewalling (IP filter, ipfw, ipchains, pf, ...)
-* wysy³anie ,,surowych'' pakietów IP i ramek Ethernetowych
+* wysyÅ‚anie ,,surowych'' pakietÃ³w IP i ramek Ethernetowych
 
 %package devel
 Summary:	Header files for libdnet
-Summary(pl):	Pliki nag³ówkowe biblioteki libdnet
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki libdnet
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Header files for libdnet.
 
-%description devel -l pl
-Pliki nag³ówkowe biblioteki libdnet.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe biblioteki libdnet.
 
 %package static
 Summary:	libdnet static library
-Summary(pl):	Statyczna biblioteka libdnet
+Summary(pl.UTF-8):   Statyczna biblioteka libdnet
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 libdnet static library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna biblioteka libdnet.
 
 %package progs
 Summary:	Sample applications to use with libdnet
-Summary(pl):	Przyk³adowe aplikacje do wykorzystania libdnet
+Summary(pl.UTF-8):   PrzykÅ‚adowe aplikacje do wykorzystania libdnet
 Group:		Applications/Networking
 Requires:	%{name} = %{version}-%{release}
 
 %description progs
 Sample applications to use with libdnet.
 
-%description progs -l pl
-Przyk³adowe aplikacje do wykorzystania libdnet.
+%description progs -l pl.UTF-8
+PrzykÅ‚adowe aplikacje do wykorzystania libdnet.
 
 %prep
 %setup -q
