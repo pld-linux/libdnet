@@ -2,7 +2,7 @@
 %bcond_without	static_libs	# don't build static library
 #
 Summary:	Interface to several low-level networking routines
-Summary(pl.UTF-8):   Interfejs do niektórych niskopoziomowych funkcji sieciowych
+Summary(pl.UTF-8):	Interfejs do niektórych niskopoziomowych funkcji sieciowych
 Name:		libdnet
 Version:	1.8
 Release:	1
@@ -37,7 +37,7 @@ niskopoziomowych funkcji sieciowych, włączając w to:
 
 %package devel
 Summary:	Header files for libdnet
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki libdnet
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libdnet
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -49,7 +49,7 @@ Pliki nagłówkowe biblioteki libdnet.
 
 %package static
 Summary:	libdnet static library
-Summary(pl.UTF-8):   Statyczna biblioteka libdnet
+Summary(pl.UTF-8):	Statyczna biblioteka libdnet
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -61,7 +61,7 @@ Statyczna biblioteka libdnet.
 
 %package progs
 Summary:	Sample applications to use with libdnet
-Summary(pl.UTF-8):   Przykładowe aplikacje do wykorzystania libdnet
+Summary(pl.UTF-8):	Przykładowe aplikacje do wykorzystania libdnet
 Group:		Applications/Networking
 Requires:	%{name} = %{version}-%{release}
 
