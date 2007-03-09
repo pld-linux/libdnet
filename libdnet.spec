@@ -4,18 +4,20 @@
 Summary:	Interface to several low-level networking routines
 Summary(pl.UTF-8):	Interfejs do niektórych niskopoziomowych funkcji sieciowych
 Name:		libdnet
-Version:	1.8
-Release:	1
+Version:	1.11
+Release:	0.1
 License:	BSD
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/libdnet/%{name}-%{version}.tar.gz
-# Source0-md5:	187054990cd8e4e1aa6845912b34236d
-Patch0:		%{name}-ac.patch
-Patch1:		%{name}-am.patch
+# Source0-md5:	04c394ed8e1e7fc455456e79e908916d
+#Patch0:		%{name}-ac.patch
+#Patch1:		%{name}-am.patch
 URL:		http://libdnet.sourceforge.net/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	libtool
+BuildRequires:	rpm-pythonprov
+BuildRequires:	python-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -71,10 +73,22 @@ Sample applications to use with libdnet.
 %description progs -l pl.UTF-8
 Przykładowe aplikacje do wykorzystania libdnet.
 
+%package -n python-libdnet
+Summary:	libdnet python module
+Summary(pl.UTF-8):	Moduł libdnet dla pythona
+Group:		Libraries
+#%pyrequires_eq	python-libs
+
+%description -n python-libdnet
+libdnet python module.
+
+%description -n python-libdnet -l pl.UTF-8
+Moduł libdnet dla pythona.
+
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+#%patch0 -p1
+#%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -83,6 +97,7 @@ Przykładowe aplikacje do wykorzystania libdnet.
 %{__autoheader}
 %{__automake}
 %configure \
+	--with-python \
 	%{!?with_static_libs:--disable-static}
 %{__make}
 
@@ -122,3 +137,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/*
 %{_mandir}/man8/*
+
+%files -n python-libdnet
+%defattr(644,root,root,755)
+%attr(755,root,root) %{py_sitedir}/dnet.so
