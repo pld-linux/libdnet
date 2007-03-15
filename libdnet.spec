@@ -1,3 +1,4 @@
+#
 # Conditional build:
 %bcond_without	static_libs	# don't build static library
 #
@@ -74,16 +75,17 @@ Sample applications to use with libdnet.
 Przykładowe aplikacje do wykorzystania libdnet.
 
 %package -n python-libdnet
-Summary:	libdnet python module
-Summary(pl.UTF-8):	Moduł libdnet dla pythona
+Summary:	libdnet Python module
+Summary(pl.UTF-8):	Moduł libdnet dla Pythona
 Group:		Libraries
-#%pyrequires_eq	python-libs
+Requires:	%{name} = %{version}-%{release}
+%pyrequires_eq	python-libs
 
 %description -n python-libdnet
-libdnet python module.
+libdnet Python module.
 
 %description -n python-libdnet -l pl.UTF-8
-Moduł libdnet dla pythona.
+Moduł libdnet dla Pythona.
 
 %prep
 %setup -q
