@@ -1,0 +1,10 @@
+--- libdnet-1.11/python/dnet.pyx.orig	2006-01-19 07:09:01.000000000 +0100
++++ libdnet-1.11/python/dnet.pyx	2008-03-21 19:09:11.058710426 +0100
+@@ -46,7 +46,6 @@
+     memcpy(dst, src, n)
+ 
+ cdef __oserror():
+-    cdef extern int errno
+     return strerror(errno)
+ 
+ def __iter_append(entry, l):
