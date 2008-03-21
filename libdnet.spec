@@ -6,19 +6,19 @@ Summary:	Interface to several low-level networking routines
 Summary(pl.UTF-8):	Interfejs do niektórych niskopoziomowych funkcji sieciowych
 Name:		libdnet
 Version:	1.11
-Release:	0.1
+Release:	1
 License:	BSD
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/libdnet/%{name}-%{version}.tar.gz
 # Source0-md5:	04c394ed8e1e7fc455456e79e908916d
-#Patch0:		%{name}-ac.patch
-#Patch1:		%{name}-am.patch
+Patch0:		%{name}-python.patch
 URL:		http://libdnet.sourceforge.net/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	libtool
+BuildRequires:	python-Pyrex
+BuildRequires:	python-devel >= 1:2.5
 BuildRequires:	rpm-pythonprov
-BuildRequires:	python-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -89,8 +89,10 @@ Moduł libdnet dla Pythona.
 
 %prep
 %setup -q
-#%patch0 -p1
-#%patch1 -p1
+%patch0 -p1
+
+# invalid lvalues, force regeneration from .pyx
+rm python/dnet.c
 
 %build
 %{__libtoolize}
@@ -117,29 +119,31 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc THANKS TODO
-%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+%doc LICENSE README THANKS TODO
+%attr(755,root,root) %{_libdir}/libdnet.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libdnet.so.1
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/*-config
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
+%attr(755,root,root) %{_bindir}/dnet-config
+%attr(755,root,root) %{_libdir}/libdnet.so
+%{_libdir}/libdnet.la
 %{_includedir}/dnet
-%{_includedir}/*.h
-%{_mandir}/man3/*
+%{_includedir}/dnet.h
+%{_mandir}/man3/dnet.3*
 
 %if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libdnet.a
 %endif
 
 %files progs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_sbindir}/*
-%{_mandir}/man8/*
+%attr(755,root,root) %{_sbindir}/dnet
+%{_mandir}/man8/dnet.8*
 
 %files -n python-libdnet
 %defattr(644,root,root,755)
 %attr(755,root,root) %{py_sitedir}/dnet.so
+%{py_sitedir}/dnet-*.egg-info
