@@ -6,7 +6,7 @@ Summary:	Interface to several low-level networking routines
 Summary(pl.UTF-8):	Interfejs do niektórych niskopoziomowych funkcji sieciowych
 Name:		libdnet
 Version:	1.11
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/libdnet/%{name}-%{version}.tar.gz
