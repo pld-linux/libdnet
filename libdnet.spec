@@ -6,12 +6,14 @@ Summary:	Interface to several low-level networking routines
 Summary(pl.UTF-8):	Interfejs do niektórych niskopoziomowych funkcji sieciowych
 Name:		libdnet
 Version:	1.11
-Release:	5
+Release:	6
 License:	BSD
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/libdnet/%{name}-%{version}.tar.gz
 # Source0-md5:	04c394ed8e1e7fc455456e79e908916d
 Patch0:		%{name}-python.patch
+Patch1:		%{name}-vlan.patch
+Patch2:		%{name}-ip6.patch
 URL:		http://libdnet.sourceforge.net/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -90,6 +92,8 @@ Moduł libdnet dla Pythona.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 # invalid lvalues, force regeneration from .pyx
 rm python/dnet.c

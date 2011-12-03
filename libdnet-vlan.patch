@@ -1,0 +1,97 @@
+diff -ruN libdnet-1.11.orig/test/dnet/aton.c libdnet-1.11/test/dnet/aton.c
+--- libdnet-1.11.orig/test/dnet/aton.c	2002-10-14 17:42:10.000000000 +0200
++++ libdnet-1.11/test/dnet/aton.c	2011-12-03 23:15:33.472366712 +0100
+@@ -222,3 +222,15 @@
+ 	}
+ 	return (u - buf);
+ }
++
++int
++vid_aton(char *string, uint16_t *vid)
++{
++	u_int i;
++	
++	/* XXX */
++	if (sscanf(string, "%i", &i) != 1 || i > 0xffff)
++		return (-1);
++	*vid = htons(i & 0xffff);
++	return (0);
++}
+diff -ruN libdnet-1.11.orig/test/dnet/dnet.8 libdnet-1.11/test/dnet/dnet.8
+--- libdnet-1.11.orig/test/dnet/dnet.8	2002-04-01 09:11:34.000000000 +0200
++++ libdnet-1.11/test/dnet/dnet.8	2011-12-03 23:10:04.055399746 +0100
+@@ -42,6 +42,7 @@
+ .Op Nm type Ar type 
+ .Op Nm src Ar mac
+ .Op Nm dst Ar mac
++.Op Nm vid Ar vlan_id
+ .Xc
+ Prepend the data read from standard input with an Ethernet header on
+ standard output. The Ethernet
+diff -ruN libdnet-1.11.orig/test/dnet/eth.c libdnet-1.11/test/dnet/eth.c
+--- libdnet-1.11.orig/test/dnet/eth.c	2002-02-08 08:43:53.000000000 +0100
++++ libdnet-1.11/test/dnet/eth.c	2011-12-03 23:16:31.263588754 +0100
+@@ -23,7 +23,7 @@
+ void
+ eth_usage(void)
+ {
+-	fprintf(stderr, "Usage: dnet eth [type|src|dst <value>] ... \n");
++	fprintf(stderr, "Usage: dnet eth [type|src|dst|vid <value>] ... \n");
+ 	exit(1);
+ }
+ 
+@@ -31,10 +31,11 @@
+ eth_main(int argc, char *argv[])
+ {
+ 	struct eth_hdr *eth;
++	uint16_t type, vid;
+ 	struct addr addr;
+-	u_char *p, buf[ETH_LEN_MAX];	/* XXX */
++	u_char *p, buf[ETH_LEN_MAX + 4];	/* XXX */
+ 	char *name, *value;
+-	int c, len;
++	int c, len, is_tagged = 0;
+ 
+ 	eth = (struct eth_hdr *)buf;
+ 	memset(eth, 0, sizeof(*eth));
+@@ -45,8 +46,13 @@
+ 		value = argv[c + 1];
+ 
+ 		if (strcmp(name, "type") == 0) {
+-			if (type_aton(value, &eth->eth_type) < 0)
++			if (type_aton(value, &type) < 0)
+ 				eth_usage();
++
++			if (is_tagged)
++				memmove(((uint8_t *)&eth->eth_type) + 4, &type, sizeof(uint16_t));
++			else
++				eth->eth_type = type;
+ 		} else if (strcmp(name, "src") == 0) {
+ 			if (addr_aton(value, &addr) < 0)
+ 				eth_usage();
+@@ -55,6 +61,14 @@
+ 			if (addr_aton(value, &addr) < 0)
+ 				eth_usage();
+ 			memcpy(&eth->eth_dst, &addr.addr_eth, ETH_ADDR_LEN);
++		} else if (strcmp(name, "vid") == 0) {
++			if (is_tagged)
++				eth_usage();
++			memmove(buf + ETH_HDR_LEN - ETH_TYPE_LEN + 4, buf + ETH_HDR_LEN - ETH_TYPE_LEN, ETH_LEN_MAX - ETH_HDR_LEN + ETH_TYPE_LEN);
++			eth->eth_type = htons(ETH_TYPE_8021Q);
++			vid_aton(value, &vid);
++			memmove(buf + ETH_HDR_LEN, &vid, sizeof(uint16_t));
++			is_tagged = 1;
+ 		} else
+ 			eth_usage();
+ 	}
+@@ -67,8 +81,8 @@
+ 	if (isatty(STDIN_FILENO))
+ 		errx(1, "can't read Ethernet payload from tty");
+ 	
+-	p = buf + ETH_HDR_LEN;
+-	len = sizeof(buf) - (p - buf);
++	p = buf + ETH_HDR_LEN + (is_tagged ? 4 : 0);
++	len = sizeof(buf) - (p - buf) - (is_tagged ? 0 : 4);
+ 	
+ 	while ((c = read(STDIN_FILENO, p, len)) > 0) {
+ 		p += c;
