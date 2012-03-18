@@ -164,7 +164,7 @@ diff -ruN libdnet-1.11.orig/test/dnet/ip6.c libdnet-1.11/test/dnet/ip6.c
 +				ip6_usage();
 +			memcpy(&dst, &addr.addr_ip6, IP6_ADDR_LEN);
 +		} else
-+			ip_usage();
++			ip6_usage();
 +	}
 +	argc -= c;
 +	argv += c;
