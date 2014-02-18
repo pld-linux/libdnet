@@ -5,16 +5,17 @@
 Summary:	Interface to several low-level networking routines
 Summary(pl.UTF-8):	Interfejs do niektórych niskopoziomowych funkcji sieciowych
 Name:		libdnet
-Version:	1.11
-Release:	6
+Version:	1.12
+Release:	1
 License:	BSD
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/libdnet/%{name}-%{version}.tar.gz
-# Source0-md5:	04c394ed8e1e7fc455456e79e908916d
+#Source0Download: https://code.google.com/p/libdnet/downloads/list
+Source0:	https://libdnet.googlecode.com/files/%{name}-%{version}.tgz
+# Source0-md5:	9253ef6de1b5e28e9c9a62b882e44cc9
 Patch0:		%{name}-python.patch
 Patch1:		%{name}-vlan.patch
 Patch2:		%{name}-ip6.patch
-URL:		http://libdnet.sourceforge.net/
+URL:		https://code.google.com/p/libdnet/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	libtool
@@ -36,7 +37,8 @@ networking routines, including:
 libdnet zapewnia uproszczony, przenośny interfejs do niektórych
 niskopoziomowych funkcji sieciowych, włączając w to:
 * manipulację adresami sieciowymi
-* przeglądanie i modyfikację pamięci podręcznej ARP oraz tablic routingu
+* przeglądanie i modyfikację pamięci podręcznej ARP oraz tablic
+  routingu
 * firewalling (IP filter, ipfw, ipchains, pf, ...)
 * wysyłanie ,,surowych'' pakietów IP i ramek Ethernetowych
 
@@ -96,7 +98,7 @@ Moduł libdnet dla Pythona.
 %patch2 -p1
 
 # invalid lvalues, force regeneration from .pyx
-rm python/dnet.c
+%{__rm} python/dnet.c
 
 %build
 %{__libtoolize}
@@ -150,4 +152,4 @@ rm -rf $RPM_BUILD_ROOT
 %files -n python-libdnet
 %defattr(644,root,root,755)
 %attr(755,root,root) %{py_sitedir}/dnet.so
-%{py_sitedir}/dnet-*.egg-info
+%{py_sitedir}/dnet-%{version}-py*.egg-info
