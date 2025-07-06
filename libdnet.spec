@@ -93,9 +93,9 @@ Moduł libdnet dla Pythona.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
 
 # invalid lvalues, force regeneration from .pyx
 %{__rm} python/dnet.c
