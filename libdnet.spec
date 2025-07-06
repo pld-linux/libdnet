@@ -1,26 +1,33 @@
 #
 # Conditional build:
-%bcond_without	static_libs	# don't build static library
+%bcond_without	python2		# CPython 2.x module
+%bcond_without	python3		# CPython 3.x module
+%bcond_without	static_libs	# static library
 #
 Summary:	Interface to several low-level networking routines
 Summary(pl.UTF-8):	Interfejs do niektórych niskopoziomowych funkcji sieciowych
 Name:		libdnet
-Version:	1.12
-Release:	4
+Version:	1.18.0
+Release:	1
 License:	BSD
 Group:		Libraries
-#Source0Download: https://code.google.com/p/libdnet/downloads/list
-Source0:	https://libdnet.googlecode.com/files/%{name}-%{version}.tgz
-# Source0-md5:	9253ef6de1b5e28e9c9a62b882e44cc9
-Patch0:		%{name}-python.patch
+#Source0Download: https://github.com/ofalk/libdnet/releases
+Source0:	https://github.com/ofalk/libdnet/archive/libdnet-%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	5215b66fee62f0d52a8a74de5312abc3
 Patch1:		%{name}-vlan.patch
 Patch2:		%{name}-ip6.patch
-URL:		https://code.google.com/p/libdnet/
-BuildRequires:	autoconf >= 2.53
+URL:		https://github.com/ofalk/libdnet
+BuildRequires:	autoconf >= 2.71
 BuildRequires:	automake
-BuildRequires:	libtool
-BuildRequires:	python-Pyrex
-BuildRequires:	python-devel >= 1:2.5
+BuildRequires:	libtool >= 2:2.2
+%if %{with python2}
+BuildRequires:	python-Cython
+BuildRequires:	python-devel >= 1:2.7
+%endif
+%if %{with python3}
+BuildRequires:	python3-Cython
+BuildRequires:	python3-devel >= 1:3.2
+%endif
 BuildRequires:	rpm-pythonprov
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -79,21 +86,31 @@ Sample applications to use with libdnet.
 Przykładowe aplikacje do wykorzystania libdnet.
 
 %package -n python-libdnet
-Summary:	libdnet Python module
-Summary(pl.UTF-8):	Moduł libdnet dla Pythona
+Summary:	dnet Python 2 module
+Summary(pl.UTF-8):	Moduł dnet dla Pythona 2
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
-%pyrequires_eq	python-libs
 
 %description -n python-libdnet
-libdnet Python module.
+dnet Python module.
 
 %description -n python-libdnet -l pl.UTF-8
-Moduł libdnet dla Pythona.
+Moduł dnet dla Pythona.
+
+%package -n python3-libdnet
+Summary:	dnet Python 3 module
+Summary(pl.UTF-8):	Moduł dnet dla Pythona 3
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description -n python3-libdnet
+dnet Python module.
+
+%description -n python3-libdnet -l pl.UTF-8
+Moduł dnet dla Pythona.
 
 %prep
-%setup -q
-%patch -P0 -p1
+%setup -q -n %{name}-libdnet-%{version}
 %patch -P1 -p1
 %patch -P2 -p1
 
@@ -107,15 +124,36 @@ Moduł libdnet dla Pythona.
 %{__autoheader}
 %{__automake}
 %configure \
-	--with-python \
-	%{!?with_static_libs:--disable-static}
+	%{!?with_static_libs:--disable-static} \
+	--without-python
+
 %{__make}
+
+cd python
+%if %{with python2}
+%py_build
+%endif
+
+%if %{with python3}
+%py3_build
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+cd python
+%if %{with python2}
+%py_install
+
+%py_postclean
+%endif
+
+%if %{with python3}
+%py3_install
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -125,7 +163,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc LICENSE README THANKS TODO
+%doc LICENSE README.md THANKS TODO
 %attr(755,root,root) %{_libdir}/libdnet.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libdnet.so.1
 
@@ -149,7 +187,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/dnet
 %{_mandir}/man8/dnet.8*
 
+%if %{with python2}
 %files -n python-libdnet
 %defattr(644,root,root,755)
 %attr(755,root,root) %{py_sitedir}/dnet.so
 %{py_sitedir}/dnet-%{version}-py*.egg-info
+%endif
+
+%if %{with python3}
+%files -n python3-libdnet
+%defattr(644,root,root,755)
+%attr(755,root,root) %{py3_sitedir}/dnet.cpython-*.so
+%{py3_sitedir}/dnet-%{version}-py*.egg-info
+%endif

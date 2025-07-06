@@ -17,11 +17,10 @@ diff -ruN libdnet-1.11.orig/test/dnet/aton.c libdnet-1.11/test/dnet/aton.c
 +	*vid = htons(i & 0xffff);
 +	return (0);
 +}
-diff -ruN libdnet-1.11.orig/test/dnet/dnet.8 libdnet-1.11/test/dnet/dnet.8
---- libdnet-1.11.orig/test/dnet/dnet.8	2002-04-01 09:11:34.000000000 +0200
-+++ libdnet-1.11/test/dnet/dnet.8	2011-12-03 23:10:04.055399746 +0100
-@@ -42,6 +42,7 @@
- .Op Nm type Ar type 
+--- libdnet-libdnet-1.18.0/test/dnet/dnet.8.orig	2024-03-08 14:03:35.000000000 +0100
++++ libdnet-libdnet-1.18.0/test/dnet/dnet.8	2025-07-06 20:06:32.817271272 +0200
+@@ -42,6 +42,7 @@ random bytes to standard output.
+ .Op Nm type Ar type
  .Op Nm src Ar mac
  .Op Nm dst Ar mac
 +.Op Nm vid Ar vlan_id

@@ -10,30 +10,6 @@ diff -ruN libdnet-1.11.orig/test/dnet/Makefile.am libdnet-1.11/test/dnet/Makefil
  
  man_MANS = dnet.8
  
-diff -ruN libdnet-1.11.orig/test/dnet/Makefile.in libdnet-1.11/test/dnet/Makefile.in
---- libdnet-1.11.orig/test/dnet/Makefile.in	2006-01-19 09:24:46.000000000 +0100
-+++ libdnet-1.11/test/dnet/Makefile.in	2011-12-03 23:05:24.899192576 +0100
-@@ -106,7 +106,7 @@
- sbin_PROGRAMS = dnet
- 
- dnet_SOURCES = addr.c arp.c aton.c aton.h dnet.c eth.c fw.c hex.c \
--	icmp.c intf.c ip.c mod.h rand.c route.c send.c tcp.c udp.c
-+	icmp.c intf.c ip.c ip6.c mod.h rand.c route.c send.c tcp.c udp.c
- 
- 
- man_MANS = dnet.8
-@@ -123,8 +123,9 @@
- 
- am_dnet_OBJECTS = addr.$(OBJEXT) arp.$(OBJEXT) aton.$(OBJEXT) \
- 	dnet.$(OBJEXT) eth.$(OBJEXT) fw.$(OBJEXT) hex.$(OBJEXT) \
--	icmp.$(OBJEXT) intf.$(OBJEXT) ip.$(OBJEXT) rand.$(OBJEXT) \
--	route.$(OBJEXT) send.$(OBJEXT) tcp.$(OBJEXT) udp.$(OBJEXT)
-+	icmp.$(OBJEXT) intf.$(OBJEXT) ip.$(OBJEXT) ip6.$(OBJEXT) \
-+	rand.$(OBJEXT) route.$(OBJEXT) send.$(OBJEXT) tcp.$(OBJEXT) \
-+	udp.$(OBJEXT)
- dnet_OBJECTS = $(am_dnet_OBJECTS)
- dnet_DEPENDENCIES = $(top_builddir)/src/libdnet.la
- dnet_LDFLAGS =
 diff -ruN libdnet-1.11.orig/test/dnet/aton.c libdnet-1.11/test/dnet/aton.c
 --- libdnet-1.11.orig/test/dnet/aton.c	2002-10-14 17:42:10.000000000 +0200
 +++ libdnet-1.11/test/dnet/aton.c	2011-12-03 23:06:18.852669377 +0100
