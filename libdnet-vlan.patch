@@ -94,3 +94,12 @@ diff -ruN libdnet-1.11.orig/test/dnet/eth.c libdnet-1.11/test/dnet/eth.c
  	
  	while ((c = read(STDIN_FILENO, p, len)) > 0) {
  		p += c;
+--- libdnet-libdnet-1.18.0/test/dnet/aton.h.orig	2024-03-08 14:03:35.000000000 +0100
++++ libdnet-libdnet-1.18.0/test/dnet/aton.h	2025-07-07 18:18:22.970346989 +0200
+@@ -17,5 +17,6 @@ int	port_aton(char *string, uint16_t *po
+ int	seq_aton(char *string, uint32_t *seq);
+ int	flags_aton(char *string, uint8_t *flags);
+ int	fmt_aton(char *string, u_char *buf);
++int	vid_aton(char *string, uint16_t *vid);
+ 
+ #endif /* ATON_H */
